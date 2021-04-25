@@ -243,6 +243,9 @@
     <Content Include="Views\AirCraft\Index.cshtml" />
     <Content Include="Views\Land\Index.cshtml" />
     <Content Include="Views\WaterCraft\Index.cshtml" />
+    <Content Include="Views\AirCraft\Create.cshtml" />
+    <Content Include="Views\Land\Create.cshtml" />
+    <Content Include="Views\WaterCraft\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
