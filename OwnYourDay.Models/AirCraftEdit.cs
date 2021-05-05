@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace OwnYourDay.Models
 {
-    public class WaterCraftListItem
+    public class AirCraftEdit
     {
-        public int WaterCraftId { get; set; }
+        public int AirCraftId { get; set; }
 
         public int OccupancyCount { get; set; }
 
@@ -17,6 +16,6 @@ namespace OwnYourDay.Models
 
         public string VehicleModel { get; set; }
 
-        public string Captain { get; set; }
+        public string Pilot { get; set; }
     }
 }

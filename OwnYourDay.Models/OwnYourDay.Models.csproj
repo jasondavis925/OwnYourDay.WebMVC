@@ -55,13 +55,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AirCraftCreate.cs" />
+    <Compile Include="AirCraftEdit.cs" />
     <Compile Include="AirCraftListItem.cs" />
+    <Compile Include="LandEdit.cs" />
+    <Compile Include="PersonEdit.cs" />
     <Compile Include="PersonListItem.cs" />
     <Compile Include="PersonCreate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LandCreate.cs" />
     <Compile Include="LandListItem.cs" />
     <Compile Include="WaterCraftCreate.cs" />
+    <Compile Include="WaterCraftEdit.cs" />
     <Compile Include="WaterCraftListItem.cs" />
   </ItemGroup>
   <ItemGroup>

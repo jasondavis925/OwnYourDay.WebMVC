@@ -59,6 +59,44 @@ namespace OwnYourDay.Services
                 return query.ToArray();
             }
         }
+        public Person GetPersonById(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Prospects
+                        .Single(e => e.PersonId == id && e.OwnerId == _userId);
+                return
+                    new Person
+                    {
+                        AdultCount = entity.AdultCount,
+                        ChildCount = entity.ChildCount,
+                        Email = entity.Email,
+                        Destination = entity.Destination,
+                        TravelMode = entity.TravelMode
+                    };
+            }
+        }
+        public bool UpdatePerson(PersonEdit model)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Prospects
+                        .Single(e => e.PersonId == model.PersonId && e.OwnerId == _userId);
+
+                entity.AdultCount = model.AdultCount;
+                entity.ChildCount = model.ChildCount;
+                entity.Email = model.Email;
+                entity.Destination = model.Destination;
+                entity.TravelMode = model.TravelMode;
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
+
     }
 }
 

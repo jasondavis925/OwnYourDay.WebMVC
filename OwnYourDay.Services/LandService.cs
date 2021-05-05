@@ -56,5 +56,40 @@ namespace OwnYourDay.Services
                 return query.ToArray();
             }
         }
+        public Land GetLandById(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Lands
+                        .Single(e => e.LandId == id && e.OwnerId == _userId);
+                return
+                    new Land
+                    {
+                        PropertyDescription = entity.PropertyDescription,
+                        Location = entity.Location,
+                        Activities = entity.Activities,
+                    };
+            }
+        }
+
+        public bool UpdateLand(LandEdit model)
+            {
+                using (var ctx = new ApplicationDbContext())
+                {
+                    var entity =
+                        ctx
+                            .Lands
+                            .Single(e => e.LandId == model.LandId && e.OwnerId == _userId);
+
+                    entity.PropertyDescription = model.PropertyDescription;
+                    entity.Location = model.Location;
+                    entity.Occupancy = model.Occupancy;
+                    entity.Activities = model.Activities;
+
+                    return ctx.SaveChanges() == 1;
+                }
+            }
     }
 }

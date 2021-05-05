@@ -32,11 +32,64 @@ namespace OwnYourDay.WebMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(LandCreate model)
         {
-            if (!ModelState.IsValid)
-            {
+            if (!ModelState.IsValid) return View(model);
 
-            }
+            var service = CreateLandService();
+
+            if (service.CreateLand(model))
+            {
+                TempData["SaveResult"] = "Your Land was created.";
+                return RedirectToAction("Index");
+            };
+
+            ModelState.AddModelError("", "Land could not be created.");
             return View(model);
         }
+
+        private LandService CreateLandService()
+        {
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            var service = new LandService(userId);
+            return service;
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var service = CreateLandService();
+            var detail = service.GetLandById(id);
+            var model =
+                new LandEdit
+                {
+                    PropertyDescription = detail.PropertyDescription,
+                    Location = detail.Location,
+                    Activities = detail.Activities,
+                };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, LandEdit model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            if (model.LandId != id)
+            {
+                ModelState.AddModelError("", "Id Mismatch");
+                return View(model);
+            }
+
+            var service = CreateLandService();
+
+            if (service.UpdateLand(model))
+            {
+                TempData["SaveResult"] = "Your Land was updated.";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Your Land could not be updated.");
+            return View();
+        }
+
     }
 }

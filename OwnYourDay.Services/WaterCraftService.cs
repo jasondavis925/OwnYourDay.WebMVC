@@ -56,5 +56,42 @@ namespace OwnYourDay.Services
                 return query.ToArray();
             }
         }
+
+        public WaterCraft GetWaterCraftById(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .WaterCrafts
+                        .Single(e => e.WaterCraftId == id && e.OwnerId == _userId);
+                return
+                    new WaterCraft
+                    {
+                        WaterCraftId = entity.WaterCraftId,
+                        OccupancyCount = entity.OccupancyCount,
+                        VehicleMake = entity.VehicleMake,
+                        VehicleModel = entity.VehicleModel,
+                        Captain = entity.Captain,
+                    };
+            }
+        }
+        public bool UpdateWaterCraft(WaterCraftEdit model)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .WaterCrafts
+                        .Single(e => e.WaterCraftId == model.WaterCraftId && e.OwnerId == _userId);
+
+                entity.OccupancyCount = model.OccupancyCount;
+                entity.VehicleMake = model.VehicleMake;
+                entity.VehicleModel = model.VehicleModel;
+                entity.Captain = model.Captain;
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
     }
 }

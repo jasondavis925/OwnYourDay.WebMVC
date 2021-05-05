@@ -56,5 +56,43 @@ namespace OwnYourDay.Services
                 return query.ToArray();
             }
         }
+
+        public AirCraft GetAirCraftById (int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .AirCrafts
+                        .Single(e => e.AirCraftId == id && e.OwnerId == _userId);
+                return
+                    new AirCraft
+                    {
+                        AirCraftId = entity.AirCraftId,
+                        OccupancyCount = entity.OccupancyCount,
+                        VehicleMake = entity.VehicleMake,
+                        VehicleModel = entity.VehicleModel,
+                        Pilot = entity.Pilot,
+                    };
+            }
+        }
+
+        public bool UpdateAirCraft(AirCraftEdit model)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .AirCrafts
+                        .Single(e => e.AirCraftId == model.AirCraftId && e.OwnerId == _userId);
+
+                entity.OccupancyCount = model.OccupancyCount;
+                entity.VehicleMake = model.VehicleMake;
+                entity.VehicleModel = model.VehicleModel;
+                entity.Pilot = model.Pilot;
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
     }
 }
