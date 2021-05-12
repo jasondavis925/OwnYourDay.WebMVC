@@ -1,9 +1,9 @@
-namespace OwnYourDay.Data.Migrations
+﻿namespace OwnYourDay.Data.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class indexViews : DbMigration
+    public partial class initMigration : DbMigration
     {
         public override void Up()
         {
@@ -44,9 +44,9 @@ namespace OwnYourDay.Data.Migrations
                         LandId = c.Int(nullable: false, identity: true),
                         ProspectId = c.Int(),
                         OwnerId = c.Guid(nullable: false),
-                        PropertyDescription = c.Int(nullable: false),
+                        PropertyDescription = c.String(nullable: false),
                         Location = c.String(nullable: false),
-                        Occupancy = c.String(nullable: false),
+                        Occupancy = c.Int(nullable: false),
                         Activities = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.LandId)

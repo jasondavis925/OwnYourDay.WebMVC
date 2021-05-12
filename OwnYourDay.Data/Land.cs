@@ -21,13 +21,13 @@ namespace OwnYourDay.Data
         public Guid OwnerId { get; set; }
 
         [Required]
-        public int PropertyDescription { get; set; }
+        public string PropertyDescription { get; set; }
 
         [Required]
         public string Location { get; set; }
 
         [Required]
-        public string Occupancy { get; set; }
+        public int Occupancy { get; set; }
 
         [Required]
         public string Activities { get; set; }

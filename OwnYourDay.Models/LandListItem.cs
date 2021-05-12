@@ -9,16 +9,14 @@ namespace OwnYourDay.Models
 {
     public class LandListItem
     {
-        [Required]
-        public int PropertyDescription { get; set; }
+        public int LandId { get; set; }
 
-        [Required]
+        public string PropertyDescription { get; set; }
+
         public string Location { get; set; }
 
-        [Required]
-        public string Occupancy { get; set; }
+        public int Occupancy { get; set; }
 
-        [Required]
         public string Activities { get; set; }
     }
 }

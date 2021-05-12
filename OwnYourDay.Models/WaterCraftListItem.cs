@@ -9,16 +9,14 @@ namespace OwnYourDay.Models
 {
     public class WaterCraftListItem
     {
-        [Required]
+        public int WaterCraftId { get; set; }
+
         public int OccupancyCount { get; set; }
 
-        [Required]
         public string VehicleMake { get; set; }
 
-        [Required]
         public string VehicleModel { get; set; }
 
-        [Required]
         public string Captain { get; set; }
     }
 }

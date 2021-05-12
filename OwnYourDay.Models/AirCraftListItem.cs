@@ -9,16 +9,14 @@ namespace OwnYourDay.Models
 {
     public class AirCraftListItem
     {
-        [Required]
-        public int OccupancyCount { get; set; }
+        public int AirCraftId { get; set; }
 
-        [Required]
+        public int? OccupancyCount { get; set; }
+
         public string VehicleMake { get; set; }
 
-        [Required]
         public string VehicleModel { get; set; }
 
-        [Required]
         public string Pilot { get; set; }
     }
 }

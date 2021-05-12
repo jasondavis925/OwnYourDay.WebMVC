@@ -43,11 +43,12 @@ namespace OwnYourDay.Services
                 var query =
                     ctx
                         .Prospects
-                        .Where(e => e.OwnerId == _userId)
+                        //.Where(e => e.OwnerId == _userId)
                         .Select(
                             e =>
                                 new PersonListItem
                                 {
+                                    PersonId = e.PersonId,
                                     AdultCount = e.AdultCount,
                                     ChildCount = e.ChildCount,
                                     Email = e.Email,
@@ -57,6 +58,59 @@ namespace OwnYourDay.Services
                         );
 
                 return query.ToArray();
+            }
+        }
+        public Person GetPersonById(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Prospects
+                        .Single(e => e.PersonId == id);
+                return
+                    new Person
+                    {
+                        PersonId = entity.PersonId,
+                        AdultCount = entity.AdultCount,
+                        ChildCount = entity.ChildCount,
+                        Email = entity.Email,
+                        Destination = entity.Destination,
+                        TravelMode = entity.TravelMode
+                    };
+            }
+        }
+        public bool UpdatePerson(PersonEdit model)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Prospects
+                        .Single(e => e.PersonId == model.PersonId);
+
+                entity.PersonId = model.PersonId;
+                entity.AdultCount = model.AdultCount;
+                entity.ChildCount = model.ChildCount;
+                entity.Email = model.Email;
+                entity.Destination = model.Destination;
+                entity.TravelMode = model.TravelMode;
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
+        public bool DeletePerson(int personId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Prospects
+                        .Single(e => e.PersonId == personId);
+
+                ctx.Prospects.Remove(entity);
+
+                return ctx.SaveChanges() == 1;
             }
         }
     }

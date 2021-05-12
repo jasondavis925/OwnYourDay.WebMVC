@@ -11,12 +11,12 @@ namespace OwnYourDay.Models
     {
         [Required]
         [Display(Name = "Number of Adults")]
-        [MinLength(1, ErrorMessage = "Please enter at least 1 adult.")]
+        [Range(1,100, ErrorMessage = "Please enter at least 1 adult.")]
         public int AdultCount { get; set; }
 
         [Required]
         [Display(Name = "Number of Children")]
-        [MinLength(1, ErrorMessage = "Please enter 0 for no children.")]
+        [Range(1, 100, ErrorMessage = "Please enter 0 for no children.")]
         public int ChildCount { get; set; }
 
         [Required]
