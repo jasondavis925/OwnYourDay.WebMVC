@@ -21,7 +21,7 @@ namespace OwnYourDay.Data
         public Guid OwnerId { get; set; }
 
         [Required]
-        public int OccupancyCount { get; set; }
+        public int? OccupancyCount { get; set; }
 
         [Required]
         public string VehicleMake { get; set; }

@@ -62,6 +62,7 @@ namespace OwnYourDay.WebMVC.Controllers
             var model =
                 new AirCraftEdit
                 {
+                    AirCraftId = detail.AirCraftId,
                     OccupancyCount = detail.OccupancyCount,
                     VehicleMake = detail.VehicleMake,
                     VehicleModel = detail.VehicleModel,
@@ -92,6 +93,29 @@ namespace OwnYourDay.WebMVC.Controllers
 
             ModelState.AddModelError("", "Your AirCraft could not be updated.");
             return View();
+        }
+
+        [ActionName("Delete")]
+        public ActionResult Delete(int id)
+        {
+            var svc = CreateAirCraftService();
+            var model = svc.GetAirCraftById(id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeletePost(int id)
+        {
+            var service = CreateAirCraftService();
+
+            service.DeleteAirCraft(id);
+
+            TempData["SaveResult"] = "Your AirCraft was deleted";
+
+            return RedirectToAction("Index");
         }
     }
 }

@@ -11,11 +11,11 @@ namespace OwnYourDay.Models
     {
         public int LandId { get; set; }
 
-        public int PropertyDescription { get; set; }
+        public string PropertyDescription { get; set; }
 
         public string Location { get; set; }
 
-        public string Occupancy { get; set; }
+        public int Occupancy { get; set; }
 
         public string Activities { get; set; }
     }

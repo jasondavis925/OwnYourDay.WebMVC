@@ -5,25 +5,27 @@
 <div class="jumbotron">
     <h1>OWN YOUR TIME</h1>
     <p class="lead">On your time customize a lifestyle strategy that fills your need for travel and leisure beyond the comfort of your community.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <!--<p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>-->
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
+        <h2>Get started</h2>
         <p>
             Find unique opportunities to connect with members of foreign communities and share lifestyle experience.
         </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default" @Html.ActionLink("Learn more", "Create", "Person")> </a></p>
+
+
     </div>
     <div class="col-md-4">
         <h2>Get more leisure</h2>
         <p>Enjoy your investment while connecting with your loved ones.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default" @Html.ActionLink("Learn more", "Index", "Land")></a></p>
     </div>
     <div class="col-md-4">
         <h2>Community Support</h2>
         <p>Partner with people you know and trust and customize your ideal adventure tourism today!</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default"  @Html.ActionLink("Learn more", "Index", "AirCraft")></a></p>
     </div>
 </div>

@@ -11,7 +11,7 @@ namespace OwnYourDay.Models
     {
         public int AirCraftId { get; set; }
 
-        public int OccupancyCount { get; set; }
+        public int? OccupancyCount { get; set; }
 
         public string VehicleMake { get; set; }
 

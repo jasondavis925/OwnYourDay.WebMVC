@@ -22,6 +22,7 @@ namespace OwnYourDay.Services
             var entity =
                 new WaterCraft()
                 {
+                    OwnerId = _userId,
                     OccupancyCount = model.OccupancyCount,
                     VehicleMake = model.VehicleMake,
                     VehicleModel = model.VehicleModel,
@@ -41,11 +42,12 @@ namespace OwnYourDay.Services
                 var query =
                     ctx
                         .WaterCrafts
-                        .Where(e => e.OwnerId == _userId)
+                        //.Where(e => e.OwnerId == _userId)
                         .Select(
                             e =>
                                 new WaterCraftListItem
                                 {
+                                    WaterCraftId = e.WaterCraftId,
                                     OccupancyCount = e.OccupancyCount,
                                     VehicleMake = e.VehicleMake,
                                     VehicleModel = e.VehicleModel,
@@ -64,7 +66,7 @@ namespace OwnYourDay.Services
                 var entity =
                     ctx
                         .WaterCrafts
-                        .Single(e => e.WaterCraftId == id && e.OwnerId == _userId);
+                        .Single(e => e.WaterCraftId == id);
                 return
                     new WaterCraft
                     {
@@ -83,12 +85,27 @@ namespace OwnYourDay.Services
                 var entity =
                     ctx
                         .WaterCrafts
-                        .Single(e => e.WaterCraftId == model.WaterCraftId && e.OwnerId == _userId);
+                        .Single(e => e.WaterCraftId == model.WaterCraftId);
 
+                entity.WaterCraftId = model.WaterCraftId;
                 entity.OccupancyCount = model.OccupancyCount;
                 entity.VehicleMake = model.VehicleMake;
                 entity.VehicleModel = model.VehicleModel;
                 entity.Captain = model.Captain;
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
+        public bool DeleteWaterCraft(int watercraftId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .WaterCrafts
+                        .Single(e => e.WaterCraftId == watercraftId);
+
+                ctx.WaterCrafts.Remove(entity);
 
                 return ctx.SaveChanges() == 1;
             }

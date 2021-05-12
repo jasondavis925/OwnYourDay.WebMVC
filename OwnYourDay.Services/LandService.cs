@@ -22,6 +22,7 @@ namespace OwnYourDay.Services
             var entity =
                 new Land()
                 {
+                    OwnerId = _userId,
                     PropertyDescription = model.PropertyDescription,
                     Location = model.Location,
                     Occupancy = model.Occupancy,
@@ -41,11 +42,12 @@ namespace OwnYourDay.Services
                 var query =
                     ctx
                         .Lands
-                        .Where(e => e.OwnerId == _userId)
+                        //.Where(e => e.OwnerId == _userId)
                         .Select(
                             e =>
                                 new LandListItem
                                 {
+                                    LandId = e.LandId,
                                     PropertyDescription = e.PropertyDescription,
                                     Location = e.Location,
                                     Occupancy = e.Occupancy,
@@ -63,10 +65,11 @@ namespace OwnYourDay.Services
                 var entity =
                     ctx
                         .Lands
-                        .Single(e => e.LandId == id && e.OwnerId == _userId);
+                        .Single(e => e.LandId == id);
                 return
                     new Land
                     {
+                        LandId = entity.LandId,
                         PropertyDescription = entity.PropertyDescription,
                         Location = entity.Location,
                         Activities = entity.Activities,
@@ -81,8 +84,8 @@ namespace OwnYourDay.Services
                     var entity =
                         ctx
                             .Lands
-                            .Single(e => e.LandId == model.LandId && e.OwnerId == _userId);
-
+                            .Single(e => e.LandId == model.LandId);
+                entity.LandId = model.LandId;
                     entity.PropertyDescription = model.PropertyDescription;
                     entity.Location = model.Location;
                     entity.Occupancy = model.Occupancy;
@@ -91,5 +94,19 @@ namespace OwnYourDay.Services
                     return ctx.SaveChanges() == 1;
                 }
             }
+        public bool DeleteLand(int landId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Lands
+                        .Single(e => e.LandId == landId);
+
+                ctx.Lands.Remove(entity);
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
     }
 }

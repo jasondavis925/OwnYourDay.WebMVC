@@ -60,6 +60,7 @@ namespace OwnYourDay.WebMVC.Controllers
             var model =
                 new LandEdit
                 {
+                    LandId = detail.LandId,
                     PropertyDescription = detail.PropertyDescription,
                     Location = detail.Location,
                     Activities = detail.Activities,
@@ -91,5 +92,27 @@ namespace OwnYourDay.WebMVC.Controllers
             return View();
         }
 
+        [ActionName("Delete")]
+        public ActionResult Delete(int id)
+        {
+            var svc = CreateLandService();
+            var model = svc.GetLandById(id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeletePost(int id)
+        {
+            var service = CreateLandService();
+
+            service.DeleteLand(id);
+
+            TempData["SaveResult"] = "Your Land was deleted";
+
+            return RedirectToAction("Index");
+        }
     }
 }

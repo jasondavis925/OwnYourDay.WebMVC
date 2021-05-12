@@ -60,6 +60,7 @@ namespace OwnYourDay.WebMVC.Controllers
             var model =
                 new WaterCraftEdit
                 {
+                    WaterCraftId = detail.WaterCraftId,
                     OccupancyCount = detail.OccupancyCount,
                     VehicleMake = detail.VehicleMake,
                     VehicleModel = detail.VehicleModel,
@@ -92,5 +93,27 @@ namespace OwnYourDay.WebMVC.Controllers
             return View();
         }
 
+        [ActionName("Delete")]
+        public ActionResult Delete(int id)
+        {
+            var svc = CreateWaterCraftService();
+            var model = svc.GetWaterCraftById(id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeletePost(int id)
+        {
+            var service = CreateWaterCraftService();
+
+            service.DeleteWaterCraft(id);
+
+            TempData["SaveResult"] = "Your AirCraft was deleted";
+
+            return RedirectToAction("Index");
+        }
     }
 }

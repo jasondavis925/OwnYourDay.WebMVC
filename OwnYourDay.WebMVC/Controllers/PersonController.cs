@@ -62,6 +62,7 @@ namespace OwnYourDay.WebMVC.Controllers
             var model =
                 new PersonEdit
                 {
+                    PersonId = detail.PersonId,
                     AdultCount = detail.AdultCount,
                     ChildCount = detail.ChildCount,
                     Email = detail.Email,
@@ -93,6 +94,29 @@ namespace OwnYourDay.WebMVC.Controllers
 
             ModelState.AddModelError("", "Your Person could not be updated.");
             return View();
+        }
+
+        [ActionName("Delete")]
+        public ActionResult Delete(int id)
+        {
+            var svc = CreatePersonService();
+            var model = svc.GetPersonById(id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeletePost(int id)
+        {
+            var service = CreatePersonService();
+
+            service.DeletePerson(id);
+
+            TempData["SaveResult"] = "Your note was deleted";
+
+            return RedirectToAction("Index");
         }
     }
 }

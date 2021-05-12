@@ -43,11 +43,12 @@ namespace OwnYourDay.Services
                 var query =
                     ctx
                         .Prospects
-                        .Where(e => e.OwnerId == _userId)
+                        //.Where(e => e.OwnerId == _userId)
                         .Select(
                             e =>
                                 new PersonListItem
                                 {
+                                    PersonId = e.PersonId,
                                     AdultCount = e.AdultCount,
                                     ChildCount = e.ChildCount,
                                     Email = e.Email,
@@ -66,10 +67,11 @@ namespace OwnYourDay.Services
                 var entity =
                     ctx
                         .Prospects
-                        .Single(e => e.PersonId == id && e.OwnerId == _userId);
+                        .Single(e => e.PersonId == id);
                 return
                     new Person
                     {
+                        PersonId = entity.PersonId,
                         AdultCount = entity.AdultCount,
                         ChildCount = entity.ChildCount,
                         Email = entity.Email,
@@ -85,8 +87,9 @@ namespace OwnYourDay.Services
                 var entity =
                     ctx
                         .Prospects
-                        .Single(e => e.PersonId == model.PersonId && e.OwnerId == _userId);
+                        .Single(e => e.PersonId == model.PersonId);
 
+                entity.PersonId = model.PersonId;
                 entity.AdultCount = model.AdultCount;
                 entity.ChildCount = model.ChildCount;
                 entity.Email = model.Email;
@@ -96,7 +99,20 @@ namespace OwnYourDay.Services
                 return ctx.SaveChanges() == 1;
             }
         }
+        public bool DeletePerson(int personId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Prospects
+                        .Single(e => e.PersonId == personId);
 
+                ctx.Prospects.Remove(entity);
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
     }
 }
 

@@ -22,6 +22,7 @@ namespace OwnYourDay.Services
             var entity =
                 new AirCraft()
                 {
+                    OwnerId = _userId,
                     OccupancyCount = model.OccupancyCount,
                     VehicleMake = model.VehicleMake,
                     VehicleModel = model.VehicleModel,
@@ -41,11 +42,12 @@ namespace OwnYourDay.Services
                 var query =
                     ctx
                         .AirCrafts
-                        .Where(e => e.OwnerId == _userId)
+                        //.Where(e => e.OwnerId == _userId)
                         .Select(
                             e =>
                                 new AirCraftListItem
                                 {
+                                    AirCraftId = e.AirCraftId,
                                     OccupancyCount = e.OccupancyCount,
                                     VehicleMake = e.VehicleMake,
                                     VehicleModel = e.VehicleModel,
@@ -64,7 +66,7 @@ namespace OwnYourDay.Services
                 var entity =
                     ctx
                         .AirCrafts
-                        .Single(e => e.AirCraftId == id && e.OwnerId == _userId);
+                        .Single(e => e.AirCraftId == id);
                 return
                     new AirCraft
                     {
@@ -84,12 +86,27 @@ namespace OwnYourDay.Services
                 var entity =
                     ctx
                         .AirCrafts
-                        .Single(e => e.AirCraftId == model.AirCraftId && e.OwnerId == _userId);
+                        .Single(e => e.AirCraftId == model.AirCraftId);
 
+                entity.AirCraftId = model.AirCraftId;
                 entity.OccupancyCount = model.OccupancyCount;
                 entity.VehicleMake = model.VehicleMake;
                 entity.VehicleModel = model.VehicleModel;
                 entity.Pilot = model.Pilot;
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
+        public bool DeleteAirCraft(int aircraftId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .AirCrafts
+                        .Single(e => e.AirCraftId == aircraftId);
+
+                ctx.AirCrafts.Remove(entity);
 
                 return ctx.SaveChanges() == 1;
             }
